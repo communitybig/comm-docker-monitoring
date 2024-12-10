@@ -43,6 +43,15 @@ set_permissions() {
     chmod -R 755 "$path"
 }
 
+# Function to set specific ownerships for Grafana and Prometheus data
+set_data_permissions() {
+    echo "Setting ownership for Grafana data directory..."
+    sudo chown -R 472:472 "/home/$CURRENT_USER/Docker/Monitoring/Grafana/data"
+
+    echo "Setting ownership for Prometheus data directory..."
+    sudo chown -R 65534:65534 "/home/$CURRENT_USER/Docker/Monitoring/Prometheus/data"
+}
+
 # Executed after package installation
 post_install() {
     echo "Starting installation process..."
@@ -68,6 +77,9 @@ post_install() {
 
     # Adjust permissions
     set_permissions "/home/$CURRENT_USER/Docker/Monitoring"
+
+    # Set ownership for Grafana and Prometheus data directories
+    set_data_permissions
 
     # Create symbolic link for docker-compose.yml
     echo "Creating symbolic link for docker-compose.yml..."

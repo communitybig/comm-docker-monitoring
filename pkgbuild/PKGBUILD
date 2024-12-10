@@ -3,7 +3,7 @@
 
 pkgname=comm-docker-monitoring
 pkgdesc="Containerized monitoring solution using Grafana, Prometheus, and cAdvisor for Docker containers with pre-configured dashboards."
-depends=('biglinux-docker-config')
+#depends=('biglinux-docker-config')
 pkgver=$(date +%y.%m.%d)
 pkgrel=$(date +%H%M)
 arch=('any')

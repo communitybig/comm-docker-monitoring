@@ -39,7 +39,7 @@ copy_file() {
 set_permissions() {
     local path=$1
     echo "Setting permissions for: $path"
-    chown -R $CURRENT_USER:$CURRENT_USER "$path"
+    chown -R "$CURRENT_USER:$CURRENT_USER" "$path"
     chmod -R 755 "$path"
 }
 
@@ -54,13 +54,15 @@ post_install() {
     # Create necessary directories for Grafana and Prometheus
     echo "Checking and creating necessary directories..."
     create_dir "/home/$CURRENT_USER/Docker/Monitoring/Grafana/data"
-    create_dir "/home/$CURRENT_USER/Docker/Monitoring/Grafana/config"
+    create_dir "/home/$CURRENT_USER/Docker/Monitoring/Grafana/config/provisioning/dashboards"
+    create_dir "/home/$CURRENT_USER/Docker/Monitoring/Grafana/config/provisioning/datasources"
     create_dir "/home/$CURRENT_USER/Docker/Monitoring/Prometheus/data"
     create_dir "/home/$CURRENT_USER/Docker/Monitoring/Prometheus/config"
 
     # Copy configuration files
     echo "Checking and copying configuration files..."
-    copy_file "$CONFIG_DIR/grafana/config/provisioning/dashboards" "/home/$CURRENT_USER/Docker/Monitoring/Grafana/config/provisioning/dashboards"
+    copy_file "$CONFIG_DIR/grafana/config/provisioning/dashboards/provisioning.yml" "/home/$CURRENT_USER/Docker/Monitoring/Grafana/config/provisioning/dashboards/provisioning.yml"
+    copy_file "$CONFIG_DIR/grafana/config/provisioning/dashboards/14282_rev1.json" "/home/$CURRENT_USER/Docker/Monitoring/Grafana/config/provisioning/dashboards/14282_rev1.json"
     copy_file "$CONFIG_DIR/grafana/config/provisioning/datasources/datasource.yml" "/home/$CURRENT_USER/Docker/Monitoring/Grafana/config/provisioning/datasources/datasource.yml"
     copy_file "$CONFIG_DIR/prometheus/config/prometheus.yml" "/home/$CURRENT_USER/Docker/Monitoring/Prometheus/config/prometheus.yml"
 

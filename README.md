@@ -65,4 +65,3 @@ To view metrics collected by the monitoring system, follow these steps:
 ---
 
 This section ensures you can effectively utilize Grafana for monitoring your Docker containers.
-
